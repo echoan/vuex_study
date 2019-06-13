@@ -10,3 +10,6 @@ demo3里面的执行npm install 或者 yarn add 然后执行npm run build 或者
 lesson2
 vuex与组件之间数据状态的印射和互动
 
+lesson3
+对于lesson2的内容模块化工程化 使项目结构更清晰，更便于管理和开发
+
