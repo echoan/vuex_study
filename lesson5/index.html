@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+
+    </div>
+    <!--采用src直接引入的方式-->
+    <script src="https://vuejs.org/js/vue.js"></script>
+    <script src="https://unpkg.com/vuex@3.1.1/dist/vuex.js"></script>
+    <script>
+        //使用常量替代 Mutation 事件类型
+        const INCREMENT = 'INCREMENT';
+        const store = new Vuex.Store({
+            state:{
+               count:1
+            },
+            mutations:{
+                // increment(state){
+                //     state.count++
+                // },
+                // increment(state,n){
+                //     state.count+=n
+                // }
+                // increment(state,payload){
+                //     state.count+=payload.num
+                // },
+                [INCREMENT](state,payload){
+                    state.count+=payload.num
+                }
+            }
+        });
+        // store.commit('increment');
+        // console.log(store.state.count);
+        //可以向 store.commit 传入额外的参数，即 mutation 的 载荷（payload）
+        // store.commit('increment',10);
+        // console.log(store.state.count);
+        //在大多数情况下，载荷应该是一个对象，这样可以包含多个字段并且记录的 mutation 会更易读：
+        //store.commit('increment',{num:110});//可以写成 store.commit({ type:'increment',num:23})
+        store.commit({ type:INCREMENT,num:23});
+        console.log(store.state.count);
+        //可以在组件中使用 this.$store.commit('xxx') 提交 mutation  这需要先在根节点注入 store
+    </script>
+</body>
+</html>
