@@ -20,3 +20,6 @@ lesson5
 
 vuex五大核心之一 Mutation的使用及介绍
 
+lesson6
+vuex五大核心之一 action的使用以及介绍
+
