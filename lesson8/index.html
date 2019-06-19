@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app"></div>
+    <script src="https://vuejs.org/js/vue.js"></script>
+    <script src="https://unpkg.com/vuex@3.1.1/dist/vuex.js"></script>
+    <script>
+        //创建moudle模块来分割单一状态树 避免store对象变得臃肿
+        const moudleA = {
+            //添加命名空间 为了更好的封装调用 使模块具有更高的封装度和复用性
+            namespaced:true,
+            state:{
+                count:0
+            },
+            mutations:{
+               increment(state){
+                   //这里的state是模块的局部状态
+                   state.count++
+               }
+            },
+            getters:{
+                   doubleCount(state){
+                       return state.count*2
+                   },
+                   sumCount(state,getters,rootState){
+                       return state.count+rootState.count
+                   }
+               },
+            //同样，对于模块内部的 action，局部状态通过 context.state 暴露出来，根节点状态则为 context.rootState
+            actions:{
+                addRootCount({state,commit,rootState}){
+                    console.log(state.count,rootState.count,'---->')
+                    if((state.count + rootState.count)%2 === 1){
+                        commit('increment')
+                    }
+                }
+            }
+        }
+        //创建仓库store
+        const store = new Vuex.Store({
+            state:{
+              count:1
+            },
+           modules:{
+               a:moudleA
+           },
+           mutations:{
+          
+           }
+        });
+        //创建一个组件
+        const one = {
+            template:`
+               <div>{{count}}
+                    {{doubleCount}}
+                    <button @click = "addRootCount">addRootCount</button>
+               </div>
+            `,
+            //取得是根节点的count
+           //computed:Vuex.mapState(['count'])
+            //取模块a里面的值
+            computed:Vuex.mapState({
+                count(state){
+                    return state.a.count+state.count
+                },
+                doubleCount(state){
+                    // return this.$store.getters.doubleCount
+                     //添加命名空间以后
+                    return this.$store.getters['a/doubleCount']
+                }
+            }),
+            methods:{
+                addRootCount(){
+                   //this.$store.dispatch('addRootCount')
+                //    this.$store.commit('increment')
+                //添加命名空间以后
+                this.$store.commit('a/increment')
+                }
+            }
+
+        }
+
+        const app = new Vue({
+            el:'#app',
+            store,
+            components:{one},
+            template:`
+                <div class = 'app'>
+                   <one></one>
+                </div>
+            `
+        })
+    </script>
+</body>
+</html>
