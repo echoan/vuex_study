@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app"></div>
+    <script src="https://vuejs.org/js/vue.js"></script>
+    <script src="https://unpkg.com/vuex@3.1.1/dist/vuex.js"></script>
+    <script>
+        //创建moudle模块来分割单一状态树 避免store对象变得臃肿
+        const moudleA = {
+            state:{
+                city:['北京','上海','聊城'],
+                country:['China','USA','Russia'],
+                count:100
+            }
+        }
+        const moudleB = {
+            state:{
+                age:[20,30,40],
+                person:{
+                    name:'特朗普啊'
+                }
+            }
+        }
+        //创建仓库store
+        const store = new Vuex.Store({
+           modules:{
+               a:moudleA,
+               b:moudleB
+           }
+        });
+        //创建一个组件
+        const one = {
+            template:`
+               <div>{{sayHi}} {{count}} {{city}} {{country}} {{age}} {{name}}</div>
+            `,
+            computed:{
+                // count(){
+                //     return this.$store.state.a.count
+                // }
+                sayHi(){
+                   return "Hi"
+                },
+                ...Vuex.mapState({
+                    count:(state)=>state.a.count,
+                    city:(state)=>state.a.city[0],
+                    country:(state)=>state.a.country[1],
+                    age:(state)=>state.b.age[2],
+                    name:(state)=>state.b.person.name
+
+                })
+            }
+        }
+
+        const app = new Vue({
+            el:'#app',
+            store,
+            components:{one},
+            template:`
+                <div class = 'app'>
+                   <one></one>
+                </div>
+            `
+        })
+    </script>
+</body>
+</html>
