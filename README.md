@@ -29,3 +29,9 @@ vuex 五大核心之一 module的使用和相关介绍(一)
 lesson8
 
 vuex 五大核心之一 module的使用和相关介绍(二)
+
+lesson9
+vuex案例购物车（上）
+进入项目根目录 执行 npm install 安装相关依赖
+执行npm run build 或者 yarn build执行打包命令，打包完毕之后在浏览器打开dist 文件夹下面的 index.html
+或者直接执行 yarn dev或者npm run dev直接运行
