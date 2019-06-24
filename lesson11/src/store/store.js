@@ -53,16 +53,11 @@ const actions = {
         commit(REDUCE_CART,1)
     }
 };
-const getters = {
-    goods_obj:state =>state.goods,
-    goods_length:state =>state.goods_length
-}
 function CreateStore(){
     return new Vuex.Store({
         state,
         mutations,
-        actions,
-        getters
+        actions
     })
 }
 //导出创建的仓库
