@@ -42,4 +42,7 @@ vuex案例购物车（下）
 执行npm run build 或者 yarn build执行打包命令，打包完毕之后在浏览器打开dist 文件夹下面的 index.html
 或者直接执行 yarn dev或者npm run dev直接运行
 
+lesson11
+一个自己做的利用vuex来实现的购物车的案例（第一版）
+运行方式同上
 
