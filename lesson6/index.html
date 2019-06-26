@@ -27,7 +27,10 @@
             //  }
             increment(state){
                      state.count++;
-                }
+                },
+            incrementtwo(state){
+                    state.count+=2;
+            }
           },
           actions:{
             //   increment(context){
@@ -42,6 +45,9 @@
                 increment(context){
                     context.commit('increment')
                 },
+                incrementtwo(context){
+                    context.commit('incrementtwo')
+                },
                 // incrementAsync({commit}){
                 //      setTimeout(()=>{
                 //        commit('increment')
@@ -52,19 +58,7 @@
                 //        context.commit('increment',count)
                 //     },2000)
                 // }
-                incrementAsync(context){
-                    return new Promise((resolve,reject)=>{
-                        setTimeout(()=>{
-                            context.commit('increment');
-                            resolve();
-                        },3000)
-                    })
-                    
-                    // setTimeout(()=>{
-                    //    context.commit('increment')
-                    // },1000)
-                },
-                //用async和await来实现 将异步程序变为同步
+               
                 incrementAsync(context){
                     console.log('111')
                     return new Promise((resolve,reject)=>{
@@ -85,16 +79,28 @@
                <div>
                {{$store.state.count}}
                <button @click = "addCount">add</button>
+               <button @click = "addCounttwo">add</button>
                </div>
            `,
         //    methods:{
         //        addCount(){
         //            this.$store.dispatch('increment',{count:100});
+        //        },
+        //         //用async和await来实现 将异步程序变为同步
+        //        async addCounttwo(){
+        //            await this.$store.dispatch('incrementAsync')
+        //                  this.$store.dispatch('increment')
         //        }
-        //    }
+                
+        //    },
               //在组件中使用 this.$store.dispatch('xxx') 分发 action如上，或者使用 mapActions 辅助函数将组件的 methods 映射为 store.dispatch 调用（需要先在根节点注入 store）
               methods:Vuex.mapActions({
-                  addCount:'increment'
+                  addCount:'increment',
+                  async addCounttwo(){
+                        await this.$store.dispatch('incrementAsync')
+                              this.$store.dispatch('increment')
+                  }
+
               })
       }
         //Actions 支持同样的载荷方式和对象方式进行分发
