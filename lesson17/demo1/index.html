@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <div>
+            <span>v-model的原用法</span>
+            <h3>{{$store.state.count}}</h3>
+            <input type="text" v-model = "$store.state.count">
+        </div>
+        <div>
+            <span>v-model 在vuex中的使用</span>
+            <h3>{{$store.state.count}}</h3>
+            <input type="text" :value = "countone" @input = "updatecountone">
+        </div>
+        <div>
+            <span>v-model 双向数据绑定的计算属性</span>
+            <h3>{{$store.state.count}}</h3>
+            <input type="text" v-model = "updatecounttwo">
+        </div>
+    </div>
+    <!--采用src直接引入的方式-->
+    <script src="https://vuejs.org/js/vue.js"></script>
+    <script src="https://unpkg.com/vuex@3.1.1/dist/vuex.js"></script>
+    <script>
+        const store = new Vuex.Store({
+            strict:true,//启用严格模式 不允许直接修改count的值 必须通过muations来修改 非严格模式下可以进行修改 
+            state:{
+                count:0
+            },
+            mutations:{
+                increment(state){
+                    state.count++
+                },
+                updatecount(state,value){
+                    state.count = value
+                }
+            }
+        });
+        const app = new Vue({
+            el:"#app",
+            store,
+            // computed: {
+            //     countone(){
+            //         return this.$store.state.count;
+            //     }
+            // },或者
+            computed: {
+                ...Vuex.mapState({
+                    // countone:function(state){
+                    //     return state.count
+                    // }
+                    // countone:state=>state.count
+                    countone:'count'
+                }),
+                updatecounttwo:{
+                    get(){
+                        return this.$store.state.count
+                    },
+                    set(value){
+                        this.$store.commit('updatecount',value)
+                    }
+                }
+            },
+            methods:{
+                updatecountone(e){
+                    this.$store.commit('updatecount',e.target.value)
+                }
+            }
+        })
+        //非严格模式下 由于v-model的数据的双向绑定 会正常运行 当input标签的内容改变时 store中的state.count也会改变 
+        //不需要通过提交muations来实现 但这样会有弊端 数据的改变不会产生记录 之后状态的改变监测会出现问题 在严格模式下这种操作就会报错
+    </script>
+</body>
+</html>
