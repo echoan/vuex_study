@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <!--采用src直接引入的方式-->
+    <script src="https://vuejs.org/js/vue.js"></script>
+    <script src="https://unpkg.com/vuex@3.1.1/dist/vuex.js"></script>
+    <script>
+        const myPlugin = store=>{
+            // store初始化后调用
+            console.log('myPlugin installed')
+            store.subscribe((mutations,state)=>{
+                  // 每次 mutation 之后调用
+                  // mutation 的格式为 { type, payload }
+                    console.log(mutations);
+              })
+        }
+        const store = new Vuex.Store({
+            state:{
+                count:0
+            },
+            plugins:[myPlugin],
+            mutations:{
+                increment(state){
+                    state.count++
+                }
+            }
+        });
+    </script>
+</body>
+</html>
