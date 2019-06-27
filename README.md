@@ -66,3 +66,5 @@ vuex中的开发和生产环境下的严格模式的使用
 
 lesson17
 vuex中与v-model相关的表单处理
+lesson18
+vuex的测试模块
