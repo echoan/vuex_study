@@ -68,3 +68,7 @@ lesson17
 vuex中与v-model相关的表单处理
 lesson18
 vuex的测试模块
+lesson19 
+vuex的热重载的实现（参考官网范例）
+lesson20
+vuex热重载的实现 自己做的一个简单易懂的demo
